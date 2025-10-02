@@ -1,0 +1,55 @@
+function [] = modifyfile(filename,filename_new)    
+ fileID = fopen(filename,'r+');                                             
+ i = 0;
+ k=0;
+ while ~feof(fileID)
+        i = i+1;
+        tline = fgetl(fileID);                                              
+ end
+ fileID = fopen(filename,'r+'); 
+ while ~feof(fileID)
+        k=k+1;    
+        tline=fgetl(fileID)
+        newline{k} = tline;
+        if k==i                                                             
+            new_contents1 = "*NODE PRINT, nset=Lowerflange, frequency=1";   
+            new_contents2 = "NT";
+            new_contents3 = "*NODE PRINT, nset=Web, frequency=1";
+            new_contents4 = "NT";
+            new_contents5 = "*NODE PRINT, nset=Upperflange, frequency=1";
+            new_contents6 = "NT";
+            new_contents7 = "*EL PRINT, elset=top, frequency=1";
+            new_contents8 = "HFL2";
+            new_contents9 = "*EL PRINT, elset=bottom, frequency=1";
+            new_contents10 = "HFL2";
+            new_contents11 = "*End Step";
+            newline{k} = new_contents1;	                  	  			    
+            k = k+1;
+            newline{k} = new_contents2;											
+            k = k+1;
+            newline{k} = new_contents3;
+            k = k+1;
+            newline{k} = new_contents4;
+            k = k+1;
+            newline{k} = new_contents5;
+            k = k+1;
+            newline{k} = new_contents6;
+            k = k+1;
+            newline{k} = new_contents7;
+            k = k+1;
+            newline{k} = new_contents8;
+            k = k+1;
+            newline{k} = new_contents9;
+            k = k+1;
+            newline{k} = new_contents10;
+            k = k+1;
+            newline{k} = new_contents11;
+        end
+  end
+  fclose(fileID);                                           
+  fileID = fopen(filename_new,'w+');                    
+  for k=1:i+10
+        fprintf(fileID,'%s\t\n',newline{k});              
+  end
+  fclose(fileID);                                       
+end
